@@ -1,0 +1,479 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is([data-theme="dark"] *));
+@custom-variant rtl (&:is([dir="rtl"] *));
+
+:root {
+    /* ==================================================
+     BACKGROUND / SURFACE
+     ================================================== */
+
+    --color-background: #FFFAFA;
+    /* Page background */
+    --color-surface: #FFFFFF;
+    /* Cards, navbar, panels */
+    --color-surface-secondary: #F1F5F9;
+    /* Secondary surfaces / alternating panels */
+    --color-surface-muted: #EEF1EA;
+    /* Subtle sections / muted areas */
+    --color-overlay: rgb(0 0 0 / 50%);
+    /* overlays like modals, dropdowns, etc */
+
+
+    /* ==================================================
+     BRAND COLORS
+     ================================================== */
+
+    --color-primary: #253237;
+    /* Main brand / CTA */
+    --color-secondary: #5C6B73;
+    /* Secondary brand / secondary UI */
+    --color-accent: #E0FBFC;
+    /* Highlights / emphasis */
+    --color-supporting: #C2DFE3;
+    /* Borders / dividers / subtle UI */
+    --color-supporting-decorative: #9DB4C0;
+    /* Decorative / icons / subtle UI */
+
+
+    /* ==================================================
+     TEXT
+     ================================================== */
+
+    --color-text-primary: #253237;
+    --color-text-secondary: #5C6B73;
+    --color-text-muted: #5C6B73;
+    --color-text-disabled: #9CA3AF;
+
+
+    /* ==================================================
+     INTERACTIVE
+     ================================================== */
+
+    --color-primary-hover: #5C6B73;
+    --color-primary-active: #253237;
+
+    --color-on-primary: #FFFFFF;
+    /* Foreground on brand primary (follows --color-on-* pattern) */
+    --color-on-secondary: #FFFFFF;
+    /* Foreground on brand secondary */
+    --color-on-accent: #253237;
+    /* Foreground on brand accent (dark text on light accent) */
+
+    --color-link: #4A6B8A;
+    --color-link-hover: #253237;
+    --color-on-link: #FFFFFF;
+    /* Foreground on the link/semantic accent surface */
+
+    --color-focus-ring: #2563EB;
+
+
+    /* ==================================================
+     FEEDBACK / STATUS
+     ================================================== */
+
+    --color-success: #397354;
+    --color-on-success: #FFFFFF;
+    --color-success-bg: #F0FDF4;
+
+    --color-warning: #8A641F;
+    --color-on-warning: #FFFFFF;
+    --color-warning-bg: #FFFBEB;
+
+    --color-error: #B0503A;
+    --color-on-error: #FFFFFF;
+    --color-error-bg: #FEF2F2;
+
+    --color-info: #4A6B8A;
+    --color-on-info: #FFFFFF;
+    --color-info-bg: #F0F9FF;
+
+
+    /* ==================================================
+     BORDER
+     ================================================== */
+
+    --color-border: #E2E8F0;
+    --color-border-strong: #CBD5E1;
+
+
+    /* ==================================================
+     TYPOGRAPHY
+     ================================================== */
+
+    --font-display: "Space Grotesk", sans-serif;
+    --font-body: "Inter", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+
+
+    /* ==================================================
+     SPACING
+     ================================================== */
+
+    /* We can use Tailwind's spacing */
+
+
+    /* ==================================================
+     RADIUS
+     ================================================== */
+
+    --radius-none: 0px;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-2xl: 24px;
+    --radius-full: 9999px;
+
+
+    /* ==================================================
+     SHADOWS
+     ================================================== */
+
+    --shadow-none: none;
+
+    --shadow-sm:
+        0 1px 2px rgba(37, 50, 55, 0.06);
+
+    --shadow-md:
+        0 4px 12px rgba(37, 50, 55, 0.08);
+
+    --shadow-lg:
+        0 10px 24px rgba(37, 50, 55, 0.10);
+
+    --shadow-xl:
+        0 20px 40px rgba(37, 50, 55, 0.12);
+
+
+    /* ==================================================
+     Z-INDEX
+     ================================================== */
+
+    --z-base: 0;
+    --z-toolbar: 5;
+    --z-nav: 10;
+    --z-dropdown: 50;
+    --z-popover: 60;
+    --z-modal: 100;
+    --z-toast: 200;
+
+
+    /* ==================================================
+     BREAKPOINTS
+     ================================================== */
+
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+}
+
+
+/* ======================================================
+   SHADCN SEMANTIC ALIASES
+   ====================================================== */
+
+:root {
+    --background: var(--color-background);
+    --foreground: var(--color-text-primary);
+
+    --card: var(--color-surface);
+    --card-foreground: var(--color-text-primary);
+
+    --popover: var(--color-surface);
+    --popover-foreground: var(--color-text-primary);
+
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-on-primary);
+
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-on-secondary);
+
+    --muted: var(--color-surface-secondary);
+    --muted-foreground: var(--color-text-muted);
+
+    --accent: var(--color-accent);
+    --accent-foreground: var(--color-on-accent);
+
+    --destructive: var(--color-error);
+    --destructive-foreground: var(--color-on-error);
+
+    --border: var(--color-border);
+    --input: var(--color-border);
+    --ring: var(--color-focus-ring);
+    --overlay: var(--color-overlay);
+}
+
+
+/* ======================================================
+   THEME MAPPING (Tailwind v4)
+   ====================================================== */
+
+@theme inline {
+    --font-display: var(--font-display);
+    --font-body: var(--font-body);
+    --font-mono: var(--font-mono);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-overlay: var(--overlay);
+
+    --shadow-sm: var(--shadow-sm);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+
+    --radius-sm: var(--radius-sm);
+    --radius-md: var(--radius-md);
+    --radius-lg: var(--radius-lg);
+    --radius-xl: var(--radius-xl);
+    --radius-2xl: var(--radius-2xl);
+}
+
+
+/* ======================================================
+   BASE LAYER
+   ====================================================== */
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+
+/* ======================================================
+   DARK THEME
+   ====================================================== */
+
+[data-theme="dark"] {
+    /* ==================================================
+     BACKGROUND / SURFACE
+     ================================================== */
+
+    --color-background: #0D1315;
+    /* Main application background */
+
+    --color-surface: #161F23;
+    /* Cards, navigation, panels */
+
+    --color-surface-secondary: #1F2A30;
+    /* Secondary surfaces / alternating panels */
+
+    --color-surface-muted: #29383F;
+    /* Subtle branded / muted sections */
+
+    --color-overlay: rgb(0 0 0 / 65%);
+
+
+    /* ==================================================
+     BRAND COLORS
+     ================================================== */
+
+    --color-primary: #6FE1E8;
+    /* Primary actions in dark mode — a real saturated teal, not a
+       near-white tint, so buttons read as a distinct colored surface
+       instead of blending into --color-text-primary */
+
+    --color-secondary: #85A0AC;
+    /* Secondary actions */
+
+    --color-accent: #1B3238;
+    /* Highlight / selected state — a deep tinted surface rather than a
+       pale card, so it reads as part of the dark UI and gives on-accent
+       text somewhere dark enough to sit on */
+
+    --color-supporting: #46606A;
+    /* Borders / dividers / subtle UI */
+
+    --color-supporting-decorative: #7B98A3;
+    /* Decorative / subtle icons */
+
+
+    /* ==================================================
+     TEXT
+     ================================================== */
+
+    --color-text-primary: #F5F7F8;
+    --color-text-secondary: #B9C5CA;
+    --color-text-muted: #9CAAB0;
+    --color-text-disabled: #6F7C82;
+
+
+    /* ==================================================
+     INTERACTIVE
+     ================================================== */
+
+    --color-primary-hover: #8FEAEF;
+    --color-primary-active: #52C7CE;
+
+    --color-on-primary: #0F1416;
+    --color-on-secondary: #0F1416;
+    --color-on-accent: #EAFBFC;
+    /* Foreground on brand accent — light text, since accent is now a
+       dark tinted surface in this theme (see BRAND COLORS) */
+
+    --color-link: #8DB4D6;
+    --color-link-hover: #B5D4EF;
+    --color-on-link: #0F1416;
+    /* Foreground on the link/semantic accent surface */
+
+    --color-focus-ring: #60A5FA;
+
+
+    /* ==================================================
+     FEEDBACK / STATUS
+     ================================================== */
+
+    --color-success: #6FBF8F;
+    --color-on-success: #0F1416;
+    --color-success-bg: #163325;
+
+    --color-warning: #D6A64E;
+    --color-on-warning: #0F1416;
+    --color-warning-bg: #33280F;
+
+    --color-error: #E07A63;
+    --color-on-error: #0F1416;
+    --color-error-bg: #3A1D17;
+
+    --color-info: #8DB4D6;
+    --color-on-info: #0F1416;
+    --color-info-bg: #182B39;
+
+
+    /* ==================================================
+     BORDER
+     ================================================== */
+
+    --color-border: #3C525C;
+    --color-border-strong: #547082;
+}
+
+/* Sonner toast theming via semantic design tokens
+   Scoped to .app-sonner + data-sonner-toaster + data-sonner-theme so it
+   outranks sonner's runtime-injected [data-sonner-toaster][data-sonner-theme=...]
+   rules and follows the app theme through --color-* tokens. */
+.app-sonner[data-sonner-toaster][data-sonner-theme] {
+  --normal-bg: var(--color-surface);
+  --normal-bg-hover: var(--color-surface-secondary);
+  --normal-border: var(--color-border);
+  --normal-border-hover: var(--color-border-strong);
+  --normal-text: var(--color-text-primary);
+  --success-bg: var(--color-success-bg);
+  --success-border: var(--color-success);
+  --success-text: var(--color-text-primary);
+  --error-bg: var(--color-error-bg);
+  --error-border: var(--color-error);
+  --error-text: var(--color-text-primary);
+  --info-bg: var(--color-info-bg);
+  --info-border: var(--color-info);
+  --info-text: var(--color-text-primary);
+  --warning-bg: var(--color-warning-bg);
+  --warning-border: var(--color-warning);
+  --warning-text: var(--color-text-primary);
+  --border-radius: var(--radius);
+}
+
+.app-sonner[data-sonner-toaster] [data-description] {
+  color: var(--color-text-secondary);
+}
+
+/* ==================================================
+   CUSTOM MODERN SCROLLBAR
+   ================================================== */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) transparent;
+}
+
+/* WebKit / Blink (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border-strong);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-secondary);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ==================================================
+   PASSWORD REVEAL (single control per field)
+   Hide the legacy native toggle so desktop never shows
+   two eyes. Our custom .password-toggle stays on fine
+   pointers; on touch devices the browser's native reveal
+   is the only control we keep, so hide ours there.
+   ================================================== */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .password-toggle {
+    display: none;
+  }
+}
+
+/* ==================================================
+   TOOLTIPS ON TOUCH DEVICES
+   Tooltips are hover concepts; suppress them entirely
+   on coarse pointers where hover does not exist.
+   ================================================== */
+@media (pointer: coarse) {
+  [data-slot="tooltip-content"] {
+    display: none;
+  }
+}
+
