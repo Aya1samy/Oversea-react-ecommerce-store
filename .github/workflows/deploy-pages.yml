@@ -35,7 +35,7 @@ jobs:
       - name: Build for GitHub Pages
         run: npm run build
         env:
-          VITE_BASE_PATH: /react-ecommerce-store/
+          VITE_BASE_PATH: /Oversea-react-ecommerce-store/
           VITE_API_URL: https://oversea-ecommerce-store.vercel.app/api
 
       - name: Add SPA fallback and disable Jekyll
