@@ -14,16 +14,16 @@ const basename = import.meta.env.BASE_URL.replace(/\/+$/, "");
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-      <AuthProvider>
-        <BrowserRouter basename={basename}>
-          <ScrollToTop />
-          <DirectionProvider>
-            <CartProvider>
-              <App />
-              <AppToaster />
-            </CartProvider>
-          </DirectionProvider>
-        </BrowserRouter>
-      </AuthProvider>
+    <AuthProvider>
+      <BrowserRouter basename={basename}>
+        <ScrollToTop />
+        <DirectionProvider>
+          <CartProvider>
+            <App />
+            <AppToaster />
+          </CartProvider>
+        </DirectionProvider>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 );
