@@ -56,40 +56,101 @@ export default function useShopFilters(
 
   // Whole-catalog counts when the cached catalog is available (true counts
   // across every product), falling back to the current page otherwise.
-  const countSource = Array.isArray(catalogProducts) && catalogProducts.length
-    ? catalogProducts
-    : products;
+  const countSource =
+    Array.isArray(catalogProducts) && catalogProducts.length
+      ? catalogProducts
+      : products;
 
   // Setters for draft state
-  const setSearchQuery = (val) => setDraft((prev) => ({ ...prev, search: val }));
-  const setMinPrice = (val) => setDraft((prev) => ({ ...prev, minPrice: val }));
-  const setMaxPrice = (val) => setDraft((prev) => ({ ...prev, maxPrice: val }));
-  const changeSort = (val) => setDraft((prev) => ({ ...prev, sortBy: val }));
-  const selectBrand = (name) => setDraft((prev) => ({ ...prev, brand: name }));
-  const selectAvailability = (value) =>
+  const setSearchQuery = (val) => {
+    setDraft((prev) => ({ ...prev, search: val }));
+    setApplied((prev) => ({ ...prev, search: val }));
+  };
+
+  const setMinPrice = (val) => {
+    setDraft((prev) => ({ ...prev, minPrice: val }));
+    setApplied((prev) => ({ ...prev, minPrice: val }));
+  };
+
+  const setMaxPrice = (val) => {
+    setDraft((prev) => ({ ...prev, maxPrice: val }));
+    setApplied((prev) => ({ ...prev, maxPrice: val }));
+  };
+  const changeSort = (val) => {
+    setDraft((prev) => ({ ...prev, sortBy: val }));
+    setApplied((prev) => ({ ...prev, sortBy: val }));
+  };
+  const selectBrand = (name) => {
+    setDraft((prev) => {
+      const next = { ...prev, brand: name };
+      setApplied(next);
+      return next;
+    });
+  };
+  const selectAvailability = (value) => {
     setDraft((prev) => ({ ...prev, availability: value }));
-  const selectDiscount = (checked) =>
+    setApplied((prev) => ({ ...prev, availability: value }));
+  };
+  const selectDiscount = (checked) => {
     setDraft((prev) => ({ ...prev, discount: Boolean(checked) }));
+    setApplied((prev) => ({ ...prev, discount: Boolean(checked) }));
+  };
 
   // Picking a new category resets the picked subcategory so the list never
   // points at a subcategory that belongs to a different category.
-  const selectCategory = (name) =>
+  // const selectCategory = (name) =>
+  //   setDraft((prev) => ({
+  //     ...prev,
+  //     category: name,
+  //     subcategory: name === "All" ? "All" : prev.subcategory,
+  //   }));
+
+  // const selectSubcategory = (name) =>
+  //   setDraft((prev) => ({ ...prev, subcategory: name }));
+
+  // // Apply draft filters to applied state (a subcategory is meaningless without
+  // // its category, so it is dropped when the category is cleared).
+  // const applyFilters = () => {
+  //   // setApplied({
+  //   //   ...draft,
+  //   const nextFilters = {
+  //     ...draft,
+  //     subcategory: draft.category === "All" ? "All" : draft.subcategory,
+  //   };
+  //   // );
+
+  //   console.log("DRAFT BEFORE APPLY:", draft);
+  //   console.log("NEXT APPLIED:", nextFilters);
+
+  //   setApplied(nextFilters);
+  // };
+
+  const selectCategory = (name) => {
+    const subcategory = name === "All" ? "All" : draft.subcategory;
+
     setDraft((prev) => ({
       ...prev,
       category: name,
       subcategory: name === "All" ? "All" : prev.subcategory,
     }));
 
-  const selectSubcategory = (name) =>
-    setDraft((prev) => ({ ...prev, subcategory: name }));
+    setApplied((prev) => ({
+      ...prev,
+      category: name,
+      subcategory,
+    }));
+  };
 
-  // Apply draft filters to applied state (a subcategory is meaningless without
-  // its category, so it is dropped when the category is cleared).
-  const applyFilters = () => {
-    setApplied({
-      ...draft,
-      subcategory: draft.category === "All" ? "All" : draft.subcategory,
-    });
+  const selectSubcategory = (name) => {
+    setDraft((prev) => ({ ...prev, subcategory: name }));
+    setApplied((prev) => ({ ...prev, subcategory: name }));
+
+    // const applyFilters = () => {
+    //   setApplied({
+    //     ...draft,
+    //     subcategory: draft.category === "All" ? "All" : draft.subcategory,
+    //   });
+    // };
   };
 
   // Synchronized clear functions for active filter badges (updates both applied and draft)
@@ -160,7 +221,8 @@ export default function useShopFilters(
 
   // Subcategories for the currently selected category.
   const subcategories = useMemo(() => {
-    const category = draft.category !== "All" ? String(draft.category).toLowerCase() : null;
+    const category =
+      draft.category !== "All" ? String(draft.category).toLowerCase() : null;
     if (!category) {
       return [{ name: "All", count: 0 }];
     }
@@ -200,7 +262,7 @@ export default function useShopFilters(
     selectDiscount,
     applied,
     draft,
-    applyFilters,
+    // applyFilters,
     hydrateFromUrl,
     selectCategory,
     selectSubcategory,

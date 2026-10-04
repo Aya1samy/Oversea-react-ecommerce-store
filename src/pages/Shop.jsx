@@ -109,7 +109,7 @@ export default function Shop() {
   const [searchParams, setSearchParams] = useSearchParams();
   const pageFromUrl = Number(searchParams.get("page")) || 1;
 
-// Filters can arrive via the URL (deep links, shared links, subcategory chips).
+  // Filters can arrive via the URL (deep links, shared links, subcategory chips).
   const initialFilters = makeInitialFilters(searchParams);
 
   const filters = useShopFilters(products, catalog.products, initialFilters);
@@ -133,7 +133,7 @@ export default function Shop() {
     100,
   );
 
-// Client-side results used when a client-mode filter is active (subcategory,
+  // Client-side results used when a client-mode filter is active (subcategory,
   // availability, discount), because the backend does not support them.
   const clientResults = useMemo(() => {
     if (!isClientMode || catalog.products.length === 0) {
@@ -152,13 +152,17 @@ export default function Shop() {
     : totalProducts != null
       ? totalProducts
       : products.length;
-  const feedTotalPages = showClientResults ? clientResults.totalPages : totalPages;
+  const feedTotalPages = showClientResults
+    ? clientResults.totalPages
+    : totalPages;
   const feedLoading = showClientResults
     ? catalog.products.length === 0 && catalog.isLoading
     : isLoading;
   const feedError = showClientResults ? null : apiError;
   const resultsLabelKey =
-    showClientResults || totalProducts != null ? "shop.results" : "shop.showing";
+    showClientResults || totalProducts != null
+      ? "shop.results"
+      : "shop.showing";
 
   // URL synchronisation: applied filters are reflected in the URL so pages are
   // shareable, and a filter change resets to page 1 atomically. The URL is the
@@ -167,7 +171,7 @@ export default function Shop() {
   // from it instead of the shop writing its own (stale) state back out.
   const didMountUrl = useRef(false);
   const prevApplied = useRef(filters.applied);
-  const pendingPageReset = useRef(false);
+  // const pendingPageReset = useRef(false);
   const lastWrittenUrl = useRef(null);
   const incomingHydration = useRef(false);
 
@@ -193,7 +197,7 @@ export default function Shop() {
       incomingHydration.current = true;
       hydrateFromUrl(makeInitialFilters(searchParams));
       lastWrittenUrl.current = current;
-      pendingPageReset.current = false;
+      // pendingPageReset.current = false;
       return;
     }
 
@@ -210,7 +214,7 @@ export default function Shop() {
 
     const snapshot = new URLSearchParams(searchParams);
     if (pageFromUrl !== 1) {
-      pendingPageReset.current = true;
+      // pendingPageReset.current = true;
       snapshot.set("page", "1");
     }
     const next = syncFiltersToUrl(snapshot, applied);
@@ -226,13 +230,19 @@ export default function Shop() {
   // page number lives in the URL; when a filter change also resets the page,
   // skip the intermediate fetch so the page is fetched once.
   useEffect(() => {
+    console.log("FETCH EFFECT:", {
+      page: pageFromUrl,
+      applied: filters.applied,
+      isClientMode,
+    });
     if (isClientMode) {
       return;
     }
-    if (pendingPageReset.current) {
-      pendingPageReset.current = false;
-      return;
-    }
+    // if (pendingPageReset.current) {
+    //   pendingPageReset.current = false;
+    //   return;
+    // }
+
     fetchProducts(pageFromUrl, filters.applied);
   }, [pageFromUrl, filters.applied, fetchProducts, isClientMode]);
 
@@ -290,7 +300,7 @@ export default function Shop() {
             brands={filters.brands}
             selectedBrand={filters.draft.brand}
             setSelectedBrand={filters.selectBrand}
-minPrice={filters.minPrice}
+            minPrice={filters.minPrice}
             setMinPrice={filters.setMinPrice}
             maxPrice={filters.maxPrice}
             setMaxPrice={filters.setMaxPrice}
@@ -330,7 +340,7 @@ minPrice={filters.minPrice}
               clearCategory={filters.clearCategory}
               clearSubcategory={filters.clearSubcategory}
               clearBrand={filters.clearBrand}
-clearPrice={filters.clearPrice}
+              clearPrice={filters.clearPrice}
               clearSort={filters.clearSort}
               clearSearch={filters.clearSearch}
               clearAvailability={filters.clearAvailability}
